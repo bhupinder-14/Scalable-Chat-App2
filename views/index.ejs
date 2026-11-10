@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Room - <%= groupname %></title>
+    <link rel="stylesheet" href="/styles/index.css">
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+
+    <h1>Chatting Inside "<%= groupname %>"</h1>
+
+    <div id="main-container" data-roomid="<%= roomid %>" data-user="<%= user %>" data-user-id="<%= userId %>">
+        <div id="sidebar">
+            <h3>Online Members:</h3>
+            <ul id="online_users"></ul>
+        </div>
+    
+        <div id="chat-container">
+            <div id="messages">
+                <% for (let i = 0; i < previousmsgs.length; i++) { %>
+                    <div class="message <%= String(previousmsgs[i].senderId) === userId ? 'self' : 'other' %>" data-message-id="<%= previousmsgs[i].messageId %>">
+                        <div class="sender"><%= previousmsgs[i].sender %></div>
+                        <%= previousmsgs[i].content %>
+                    </div>
+                <% } %>
+            </div>
+    
+            <div id="input-container">
+                <input type="text" id="chat_box" placeholder="Type a message..." maxlength="2000" />
+                <button id="send" disabled>Send</button>
+                <span id="send-status" role="status"></span>
+            </div>
+        </div>
+    </div>
+
+    <script src="/scripts/chat.js"></script>
+</body>
+</html>

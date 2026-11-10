@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Groups</title>
+    <link rel="stylesheet" href="/styles/homepage.css">
+</head>
+<body>
+    <h1>Groups Chat</h1>
+    <p>Signed in as <%= user.displayName %></p>
+    <form action="/auth/logout" method="POST"><button type="submit">Sign out</button></form>
+    <section class="home-section">
+        <h2>Start a direct conversation</h2>
+        <form action="/group/direct" method="POST" class="direct-form">
+            <label for="direct-user">Choose a registered user</label>
+            <select id="direct-user" name="username" required>
+                <option value="">Select a user</option>
+                <% users.forEach(person => { %><option value="<%= person.username %>"><%= person.displayName %> (@<%= person.username %>)</option><% }); %>
+            </select>
+            <button type="submit" <%= users.length ? "" : "disabled" %>>Open conversation</button>
+        </form>
+    </section>
+    <% if (conversations.length) { %>
+    <section class="home-section">
+        <h2>Your direct conversations</h2>
+        <ul>
+            <% conversations.forEach(conversation => {
+                const other = conversation.participants.find(person => String(person._id) !== String(user._id));
+            %>
+                <li><a href="/chat/<%= conversation._id %>"><%= other ? other.displayName : "Direct conversation" %></a></li>
+            <% }); %>
+        </ul>
+    </section>
+    <% } %>
+    <section class="home-section">
+    <h2>Create a group</h2>
+    <form action="/group" method="POST" id="create-group-form">
+        <input type="text" name="name" placeholder="Enter group name" required maxlength="100">
+        <button type="submit">Create Group</button>
+    </form>
+    </section>
+
+    <!-- Separator -->
+    <div class="separator">
+        <hr>
+        <h2>Public groups</h2>
+    </div>
+
+    <ul>
+        <% groups.forEach(group => { %>
+            <li>
+                <form action="/join" method="GET" class="group-join-form">
+                    <input type="hidden" name="roomid" value="<%= group._id %>">
+                    <button type="submit"><%= group.name %></button>
+                </form>
+            </li>
+        <% }); %>
+    </ul>
+</body>
+</html>

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join Group</title>
+    <link rel="stylesheet" href="/styles/join.css">
+</head>
+<body>
+    <h1>Enter Your Username</h1>
+    <form action="/chat/<%= roomid %>" method="GET">
+        <input type="text" name="user" placeholder="Enter your username" required>
+        <button type="submit">Join Group</button>
+    </form>
+</body>
+</html>

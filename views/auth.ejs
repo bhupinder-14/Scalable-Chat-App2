@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign in · Scalable Chat</title>
+    <link rel="stylesheet" href="/styles/auth.css">
+</head>
+<body class="auth-page">
+    <main>
+        <h1>Scalable Chat</h1>
+        <% if (error) { %><p role="alert"><%= error %></p><% } %>
+        <section>
+            <h2>Sign in</h2>
+            <form action="/auth/login" method="POST">
+                <label>Username <input name="username" autocomplete="username" required maxlength="32"></label>
+                <label>Password <input name="password" type="password" autocomplete="current-password" required maxlength="128"></label>
+                <button type="submit">Sign in</button>
+            </form>
+        </section>
+        <section>
+            <h2>Create account</h2>
+            <form action="/auth/register" method="POST">
+                <label>Display name <input name="displayName" required maxlength="32"></label>
+                <label>Username <input name="username" autocomplete="username" required minlength="3" maxlength="32" pattern="[A-Za-z0-9_]+"></label>
+                <label>Password <input name="password" type="password" autocomplete="new-password" required minlength="12" maxlength="128"></label>
+                <button type="submit">Create account</button>
+            </form>
+        </section>
+    </main>
+</body>
+</html>
